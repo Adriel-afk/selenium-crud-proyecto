@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>CRUD Estudiantes</title>
+</head>
+<body>
+
+<h2>Login</h2>
+<input type="text" id="username" placeholder="Usuario">
+<input type="password" id="password" placeholder="Contraseña">
+<button id="loginBtn" onclick="login()">Ingresar</button>
+
+<div id="app" style="display:none;">
+    <h2>Registrar Estudiante</h2>
+    <input type="text" id="nombre" placeholder="Nombre">
+    <input type="number" id="edad" placeholder="Edad">
+    <input type="text" id="curso" placeholder="Curso">
+    <button id="guardar" onclick="agregar()">Guardar</button>
+
+    <h2>Lista</h2>
+    <ul id="lista"></ul>
+</div>
+
+<script>
+let estudiantes = [];
+
+function login() {
+    let user = document.getElementById("username").value;
+    let pass = document.getElementById("password").value;
+
+    if(user === "admin" && pass === "1234"){
+        document.getElementById("app").style.display = "block";
+    } else {
+        alert("Login incorrecto");
+    }
+}
+
+function agregar() {
+    let nombre = document.getElementById("nombre").value;
+    let edad = document.getElementById("edad").value;
+    let curso = document.getElementById("curso").value;
+
+    if(nombre === "" || edad === "" || curso === ""){
+        alert("Campos vacíos");
+        return;
+    }
+
+    estudiantes.push({nombre, edad, curso});
+    mostrar();
+}
+
+function mostrar(){
+    let lista = document.getElementById("lista");
+    lista.innerHTML = "";
+
+    estudiantes.forEach((e, i) => {
+        lista.innerHTML += `
+            <li>
+                ${e.nombre} - ${e.edad} - ${e.curso}
+                <button onclick="eliminar(${i})">Eliminar</button>
+            </li>
+        `;
+    });
+}
+
+function eliminar(i){
+    estudiantes.splice(i,1);
+    mostrar();
+}
+</script>
+
+</body>
+</html>
